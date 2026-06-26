@@ -1,0 +1,10 @@
+name = "mini-newtonian"
+uuid = "f8e3a7b2-4c1d-4a9e-8f6d-2b5c3e7a1d0f"
+authors = ["nano-everything"]
+version = "0.1.0"
+
+[deps]
+# Zero external dependencies — all numerical methods from scratch
+
+[compat]
+julia = "1.10"

@@ -1,0 +1,17 @@
+﻿#!/usr/bin/env julia; include("../src/CelestialMechanics.jl"); using .CelestialMechanics
+function main()
+println("="^60); println("  J2 Perturbation — Sun-Sync & Precession"); println("="^60)
+a=7000.0; e=0.001; i_deg=98.0; i_rad=deg2rad(i_deg)
+rates=j2_secular_rates(a,e,i_rad)
+println("\nLEO orbit: a=$a km, e=$e, i=$i_deg°")
+println("Ω̇ = $(round(rates.Omega_dot*86400*180/pi,4)) °/day")
+println("ω̇ = $(round(rates.omega_dot*86400*180/pi,4)) °/day")
+omega_sun=2pi/365.25/86400
+println("Target Ω̇_sun = $(round(omega_sun*180/pi*86400,4)) °/day")
+i_ss=sun_sync_inclination(a,e)
+println("Sun-sync inclination for a=$a: i=$(round(rad2deg(i_ss),2))°")
+gr=gr_precession_rate(0.387,0.2056)
+println("\nMercury GR precession: $(round(gr*180/pi*3600*100,2)) arcsec/century")
+println("(Observed: ~43 arcsec/century)")
+println("\n✅ j2_perturbation.jl done.")
+end; main()

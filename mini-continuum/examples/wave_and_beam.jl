@@ -1,0 +1,16 @@
+#!/usr/bin/env julia
+include("../src/Continuum.jl"); using .Continuum
+function main()
+    println("="^60); println("  Continuum: Waves & Beam"); println("="^60)
+    xs,t,u=wave_1d_solve(1.0,10,5,x->exp(-(x-5)^2),x->0;nx=200)
+    println("Wave: ",length(xs),"x",length(t),", max amp=",round(maximum(abs.(u)),digits=4))
+    lam,mu=lame_constants(200e9,0.3)
+    println("Steel: E=200GPa, lam=",round(lam/1e9,digits=1),"GPa, mu=",round(mu/1e9,digits=1),"GPa")
+    vp=p_wave_speed(lam,mu,7800); vs=s_wave_speed(mu,7800)
+    println("P-wave: ",round(vp),"m/s, S-wave: ",round(vs),"m/s, Rayleigh: ",round(rayleigh_wave_speed(lam,mu,7800)),"m/s")
+    xs2,w=euler_bernoulli_deflection(1e6,10,x->1000)
+    println("Beam max deflection: ",round(maximum(abs.(w)),digits=4),"m (L=10, EI=1e6, q=1000)")
+    modes=beam_natural_frequencies(1e6,10,100)
+    println("Beam modes: ",round.(modes[1:3],digits=2)," rad/s")
+    println("Done.")
+end; main()

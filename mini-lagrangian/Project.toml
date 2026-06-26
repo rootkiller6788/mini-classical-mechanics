@@ -1,0 +1,7 @@
+﻿name = "mini-lagrangian"
+uuid = "a2d5c7e1-9f3b-4c8d-b6e2-1a4f7d3c9b5e"
+authors = ["nano-everything"]
+version = "0.1.0"
+
+[deps]
+# depends on mini-newtonian for Vec3 + integrators
